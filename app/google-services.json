@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "888231607588",
+    "firebase_url": "https://concept-3b6e2.firebaseio.com",
+    "project_id": "concept-3b6e2",
+    "storage_bucket": "concept-3b6e2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:888231607588:android:2f1525881f24adae27c7b1",
+        "android_client_info": {
+          "package_name": "com.example.concept2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "888231607588-loiga947j1rupkfisj6cj48f2g79o6k8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtm1HtVrZgYhbq4dAGKfwYtuiNWFJID4w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "888231607588-loiga947j1rupkfisj6cj48f2g79o6k8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

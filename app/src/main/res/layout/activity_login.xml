@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity"
+    android:backgroundTint="#99FFFFFF"
+    android:backgroundTintMode="src_over"
+    android:background="@drawable/point_concept">
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/menu_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="40sp"
+            android:layout_marginLeft="40sp"
+            android:clickable="false"
+            android:fontFamily="@font/londrina_outline"
+            android:gravity="start"
+            android:letterSpacing="0.3"
+            android:outlineProvider="none"
+            android:selectAllOnFocus="false"
+            android:text="@string/word_oncept"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            android:textSize="46sp"
+            android:textStyle="bold"
+            android:translationX="70dp" />
+
+        <Button
+            android:id="@+id/menu_button"
+            android:layout_width="64dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="50sp"
+            android:layout_marginLeft="50sp"
+            android:fontFamily="@font/londrina_outline"
+            android:gravity="center_horizontal"
+            android:insetLeft="10sp"
+            android:insetTop="3dp"
+            android:insetBottom="6dp"
+            android:text="@string/letter_C"
+            android:textAlignment="center"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:visibility="visible"
+            app:cornerRadius="50sp" />
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="211dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="100dp"
+        android:autofillHints="@string/username_hint"
+        android:background="@drawable/edit_text_rounded"
+        android:ems="10"
+        android:hint="@string/username_hint"
+        android:inputType="textWebEmailAddress"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bottomNavigationView" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:autofillHints="@string/password_hint"
+        android:background="@drawable/edit_text_rounded"
+        android:ems="10"
+        android:hint="@string/password_hint"
+        android:inputType="textPassword"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username" />
+
+    <TextView
+        android:id="@+id/username_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:labelFor="@+id/username"
+        android:text="@string/username_label"
+        android:textColor="#434343"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/username"
+        app:layout_constraintStart_toStartOf="@+id/username" />
+
+    <TextView
+        android:id="@+id/password_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:labelFor="@+id/password"
+        android:text="@string/password_label"
+        android:textColor="#434343"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/password"
+        app:layout_constraintStart_toStartOf="@+id/password" />
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="132dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/login_button"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password" />
+
+    <Button
+        android:id="@+id/facebook_button"
+        android:layout_width="84dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:background="#00FFFFFF"
+        app:cornerRadius="40dp"
+        app:icon="@drawable/facebook_logo"
+        app:iconSize="50dp"
+        app:iconTintMode="multiply"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_button" />
+
+    <TextView
+        android:id="@+id/sign_in_button"
+        android:layout_width="161dp"
+        android:layout_height="26dp"
+        android:background="#FFFFFF"
+        android:padding="0dp"
+        android:paddingLeft="0dp"
+        android:paddingTop="0dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="0dp"
+        android:text="@string/sign_in_button"
+        android:textColor="#2B5507"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/facebook_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_button"
+        app:layout_constraintVertical_bias="0.218" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

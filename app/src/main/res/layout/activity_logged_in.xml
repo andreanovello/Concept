@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="#99FFFFFF"
+    android:backgroundTintMode="src_over"
+    android:background="@drawable/point_concept"
+    tools:context=".LoggedIn">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/join_game"
+            android:layout_width="146dp"
+            android:layout_height="139dp"
+            android:layout_marginStart="41dp"
+            android:layout_marginLeft="41dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginRight="30dp"
+            android:text="@string/join_game"
+            android:textSize="16sp"
+            app:backgroundTint="#E412217E"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/new_game"
+            app:layout_constraintTop_toBottomOf="@+id/header_layout"
+            app:layout_constraintWidth_percent="0.4" />
+
+        <Button
+            android:id="@+id/new_game"
+            android:layout_width="146dp"
+            android:layout_height="139dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/new_game"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            app:backgroundTint="#D3068A0C"
+            app:layout_constraintEnd_toStartOf="@+id/join_game"
+            app:layout_constraintHorizontal_bias="0.307"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/header_layout"
+            app:layout_constraintWidth_percent="0.4" />
+
+        <EditText
+            android:id="@+id/add_friend"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="68dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:autofillHints=""
+            android:background="@drawable/edit_text_rounded"
+            android:hint="@string/add_friend"
+            android:inputType="text"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.428"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/new_game" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="355dp"
+            android:layout_height="207dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/add_friend" />
+
+        <Button
+            android:id="@+id/add_friend_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            android:text="@string/add_friend_button"
+            app:backgroundTint="#D3068A0C"
+            app:layout_constraintBottom_toBottomOf="@+id/add_friend"
+            app:layout_constraintEnd_toEndOf="@+id/add_friend"
+            app:layout_constraintTop_toTopOf="@+id/add_friend"
+            app:layout_constraintVertical_bias="0.6" />
+
+        <LinearLayout
+            android:id="@+id/header_layout"
+            android:layout_width="409dp"
+            android:layout_height="98dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginRight="1dp"
+            android:background="#8AFFFFFF"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <Button
+                android:id="@+id/menu_button"
+                android:layout_width="64dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="70dp"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="17dp"
+                android:fontFamily="@font/londrina_outline"
+                android:gravity="center_horizontal"
+                android:insetLeft="10sp"
+                android:insetTop="3dp"
+                android:insetBottom="6dp"
+                android:text="@string/letter_C"
+                android:textAlignment="center"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:cornerRadius="50sp" />
+
+            <TextView
+                android:id="@+id/menu_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-70dp"
+                android:layout_marginLeft="-70dp"
+                android:layout_marginTop="18dp"
+                android:clickable="false"
+                android:fontFamily="@font/londrina_outline"
+                android:gravity="start"
+                android:letterSpacing="0.3"
+                android:outlineProvider="none"
+                android:selectAllOnFocus="false"
+                android:text="@string/word_oncept"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textSize="46sp"
+                android:textStyle="bold"
+                android:translationX="70dp" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/menu_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:headerLayout="@layout/main_menu_header"
+        app:menu="@menu/main_menu"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"/>
+
+</androidx.drawerlayout.widget.DrawerLayout>

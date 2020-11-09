@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Concept</string>
+    <string name="logo_description">Concept Logo</string>
+
+    <string name="logo">Logo</string>
+    <string name="letter_C">C</string>
+    <string name="word_oncept">oncept</string>
+
+    <string name="username_label">Username</string>
+    <string name="username_hint"></string>
+    <string name="password_label">Password</string>
+    <string name="password_hint"></string>
+    <string name="login_button">Login</string>
+    <string name="logout_button">Logout</string>
+    <string name="sign_in_button"><u>New player? Sign in</u></string>
+
+    <string name="new_game">Create a <br></br>new game</string>
+    <string name="join_game">Join a game</string>
+    <string name="add_friend">Search a new friend…</string>
+    <string name="add_friend_button">Add</string>
+
+
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
+    <string name="audio_label">Audio</string>
+    <string name="music_switch">Music</string>
+    <string name="sounds_switch">Sounds</string>
+
+</resources>

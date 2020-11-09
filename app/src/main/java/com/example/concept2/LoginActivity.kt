@@ -55,15 +55,23 @@ class LoginActivity : AppCompatActivity() {
 
             if ( username.isNotEmpty() && password.isNotEmpty() ){
 
-                mAuth!!.createUserWithEmailAndPassword(username, password)
-                    .addOnCompleteListener(this) { task ->
-                        if (task.isSuccessful) {
-                            Toast.makeText(this, "You are now registered! Log in and start to play Concept", Toast.LENGTH_LONG).show()
+                val addOnCompleteListener =
+                    mAuth!!.createUserWithEmailAndPassword(username + "@gmail.com", password)
+                        .addOnCompleteListener(this) { task ->
+                            if (task.isSuccessful) {
+                                Toast.makeText(
+                                    this,
+                                    "You are now registered! Log in and start to play Concept",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            } else {
+                                Toast.makeText(
+                                    this,
+                                    "An error occurred during the registration",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
                         }
-                        else {
-                            Toast.makeText(this, "An error occured during the registration", Toast.LENGTH_LONG).show()
-                        }
-                    }
             } else {
                 Toast.makeText(this, "Invalid email or password", Toast.LENGTH_LONG).show()
             }
@@ -79,7 +87,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun loginUser() {
-        mAuth!!.signInWithEmailAndPassword(username, password)
+        mAuth!!.signInWithEmailAndPassword(username + "@gmail.com", password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     startActivity(Intent(this, LoggedIn::class.java))

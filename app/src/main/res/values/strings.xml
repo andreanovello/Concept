@@ -23,6 +23,7 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
 
+    <string name="change_picture">Change</string>
     <string name="audio_label">Audio</string>
     <string name="music_switch">Music</string>
     <string name="sounds_switch">Sounds</string>

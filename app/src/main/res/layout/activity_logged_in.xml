@@ -71,6 +71,7 @@
             app:layout_constraintTop_toBottomOf="@+id/new_game" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="355dp"
             android:layout_height="207dp"
             android:layout_marginTop="20dp"
@@ -146,19 +147,18 @@
 
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
+            app:layout_constraintEnd_toEndOf="@+id/recyclerView"
+            app:layout_constraintTop_toBottomOf="@+id/add_friend"
+            tools:srcCompat="@tools:sample/avatars" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-
-
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/menu_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        app:headerLayout="@layout/main_menu_header"
-        app:menu="@menu/main_menu"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

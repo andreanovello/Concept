@@ -24,7 +24,7 @@ import android.Manifest
 
     private var galleryPermissionCode = 1001
     private var imagePickCode = 1000
-
+    private var pippo = 20
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

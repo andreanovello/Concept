@@ -14,6 +14,17 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import android.Manifest
+import android.net.Uri
+import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
+import java.lang.Exception
+import kotlin.coroutines.CoroutineContext
 
 
  class LoggedIn : AppCompatActivity() {
@@ -24,7 +35,6 @@ import android.Manifest
 
     private var galleryPermissionCode = 1001
     private var imagePickCode = 1000
-    private var pippo = 20
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,12 +44,14 @@ import android.Manifest
         mAuth = FirebaseAuth.getInstance()
         user = mAuth!!.currentUser!!
 
+        Toast.makeText(this, "Welcome " + user.displayName, Toast.LENGTH_SHORT).show()
         initHomepage()
     }
 
 
     private fun initHomepage(){
         activateConceptMenu()
+        //renderProfilePicture()
     }
 
 
@@ -111,12 +123,37 @@ import android.Manifest
      override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
          super.onActivityResult(requestCode, resultCode, data)
 
-         //DOVE SALVARE L'IMMAGINE
-         val profilePicture= findViewById<ImageView>(R.id.temp)
-
          if (resultCode == Activity.RESULT_OK && requestCode == imagePickCode){
-            profilePicture.setImageURI(data?.data)
+
+             updateProfilePicture(data?.data!!)
          }
      }
 
+     private fun updateProfilePicture(profilePictureUri: Uri){
+         mAuth!!.currentUser?.let {user ->
+             val profileUpdate = UserProfileChangeRequest.Builder().setPhotoUri(profilePictureUri).build()
+
+             CoroutineScope(Dispatchers.IO).launch {
+                 try{
+                     user.updateProfile(profileUpdate).await()
+                     withContext(Dispatchers.Main){
+                         renderProfilePicture()
+                         Toast.makeText(this@LoggedIn, "Succesfully updated", Toast.LENGTH_SHORT).show()
+                     }
+                 } catch (e:Exception){
+                     withContext(Dispatchers.Main){
+                         Toast.makeText(this@LoggedIn, e.message, Toast.LENGTH_SHORT).show()
+                     }
+                 }
+             }
+         }
+     }
+
+     private fun renderProfilePicture(){
+         val user = mAuth!!.currentUser
+         if (user != null){
+             val profilePicture= findViewById<ImageView>(R.id.temp)
+             profilePicture.setImageURI(user.photoUrl)
+         }
+     }
 }

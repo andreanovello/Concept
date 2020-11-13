@@ -1,15 +1,15 @@
 package com.example.concept2
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
+
 
 
 class LoginActivity : AppCompatActivity() {
@@ -44,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
             if (username.isNotEmpty() && password.isNotEmpty()){
                 loginUser()
             }else {
-                Toast.makeText(this, "Empty email or password", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Empty username or password", Toast.LENGTH_LONG).show()
             }
         }
 
@@ -64,6 +64,9 @@ class LoginActivity : AppCompatActivity() {
                                     "You are now registered! Log in and start to play Concept",
                                     Toast.LENGTH_LONG
                                 ).show()
+                                val profileUpdates = UserProfileChangeRequest.Builder()
+                                    .setDisplayName(username).build()
+                                mAuth!!.currentUser?.updateProfile(profileUpdates)
                             } else {
                                 Toast.makeText(
                                     this,
@@ -72,8 +75,9 @@ class LoginActivity : AppCompatActivity() {
                                 ).show()
                             }
                         }
+
             } else {
-                Toast.makeText(this, "Invalid email or password", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Invalid username or password", Toast.LENGTH_LONG).show()
             }
         }
 
@@ -92,7 +96,7 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     startActivity(Intent(this, LoggedIn::class.java))
                 } else {
-                    Toast.makeText(this, "Invalid email or password", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Invalid username or password", Toast.LENGTH_LONG).show()
                 }
             }
     }

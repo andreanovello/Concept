@@ -14,7 +14,9 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import android.Manifest
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
+import android.provider.MediaStore
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -24,6 +26,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.lang.Exception
+import java.util.*
 import kotlin.coroutines.CoroutineContext
 
 
@@ -124,12 +127,24 @@ import kotlin.coroutines.CoroutineContext
          super.onActivityResult(requestCode, resultCode, data)
 
          if (resultCode == Activity.RESULT_OK && requestCode == imagePickCode){
-
              updateProfilePicture(data?.data!!)
          }
      }
 
      private fun updateProfilePicture(profilePictureUri: Uri){
+         // USING FIREBASE STORAGE
+         // REAL TIME DATABASE NON ANCORA ATTIVATO (REGOLE DI SICUREZZA)
+         val filename = UUID.randomUUID().toString()
+         val ref= FirebaseStorage.getInstance().getReference("/images/$filename")
+         ref.putFile(profilePictureUri).addOnSuccessListener {
+             Toast.makeText(this@LoggedIn, "Succesfully updated", Toast.LENGTH_SHORT).show()
+             renderProfilePicture(profilePictureUri)
+         }.addOnFailureListener{
+             Toast.makeText(this@LoggedIn, "Something went wrong! Try again", Toast.LENGTH_SHORT).show()
+         }
+
+        /*
+        // WITH COROUTINE USING SETPHOTOURI(che all'avvio dell'activity non funziona)
          mAuth!!.currentUser?.let {user ->
              val profileUpdate = UserProfileChangeRequest.Builder().setPhotoUri(profilePictureUri).build()
 
@@ -137,7 +152,7 @@ import kotlin.coroutines.CoroutineContext
                  try{
                      user.updateProfile(profileUpdate).await()
                      withContext(Dispatchers.Main){
-                         renderProfilePicture()
+                         renderProfilePicture(profilePictureUri)
                          Toast.makeText(this@LoggedIn, "Succesfully updated", Toast.LENGTH_SHORT).show()
                      }
                  } catch (e:Exception){
@@ -146,14 +161,19 @@ import kotlin.coroutines.CoroutineContext
                      }
                  }
              }
-         }
+         }*/
      }
 
-     private fun renderProfilePicture(){
+     private fun renderProfilePicture(urifile: Uri){
          val user = mAuth!!.currentUser
          if (user != null){
              val profilePicture= findViewById<ImageView>(R.id.temp)
-             profilePicture.setImageURI(user.photoUrl)
+             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, urifile)
+             val bmDrawable = BitmapDrawable(bitmap)
+             profilePicture.setImageURI(urifile)
+             profilePicture.setBackgroundDrawable(bmDrawable)
+             //WITH setImageURI
+             //profilePicture.setImageURI(urifile)
          }
      }
 }

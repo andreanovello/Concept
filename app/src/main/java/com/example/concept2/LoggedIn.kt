@@ -176,4 +176,8 @@ import kotlin.coroutines.CoroutineContext
              //profilePicture.setImageURI(urifile)
          }
      }
-}
+
+     private fun create_a_game(view: View) {
+
+     }
+ }

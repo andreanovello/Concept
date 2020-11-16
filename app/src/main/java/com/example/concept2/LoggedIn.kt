@@ -17,17 +17,11 @@ import android.Manifest
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.provider.MediaStore
-import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
-import java.lang.Exception
 import java.util.*
-import kotlin.coroutines.CoroutineContext
 
 
  class LoggedIn : AppCompatActivity() {
@@ -39,6 +33,7 @@ import kotlin.coroutines.CoroutineContext
     private var galleryPermissionCode = 1001
     private var imagePickCode = 1000
 
+    private var cloudFirestore = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +49,7 @@ import kotlin.coroutines.CoroutineContext
 
     private fun initHomepage(){
         activateConceptMenu()
+        //RENDER PROFILE PICTURE MA PASSANDO COME ARGOMENTO UN StorageReference AL POSTO DI UN FILE URI
         //renderProfilePicture()
     }
 
@@ -77,7 +73,7 @@ import kotlin.coroutines.CoroutineContext
     }
 
     private fun activateChangePictureListener(dialog: Dialog){
-        dialog.findViewById<ImageView>(R.id.profile_picture).setOnClickListener {
+        dialog.findViewById<ImageView>(R.id.temp).setOnClickListener {
             //check runtime permission
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                 if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
@@ -133,12 +129,12 @@ import kotlin.coroutines.CoroutineContext
 
      private fun updateProfilePicture(profilePictureUri: Uri){
          // USING FIREBASE STORAGE
-         // REAL TIME DATABASE NON ANCORA ATTIVATO (REGOLE DI SICUREZZA)
+         renderProfilePicture(profilePictureUri)
          val filename = UUID.randomUUID().toString()
          val ref= FirebaseStorage.getInstance().getReference("/images/$filename")
          ref.putFile(profilePictureUri).addOnSuccessListener {
-             Toast.makeText(this@LoggedIn, "Succesfully updated", Toast.LENGTH_SHORT).show()
-             renderProfilePicture(profilePictureUri)
+             //MODIFICA REFERENCE IN CLOUD FIRESTORE
+             //addProfilePictureInCloud(ref)
          }.addOnFailureListener{
              Toast.makeText(this@LoggedIn, "Something went wrong! Try again", Toast.LENGTH_SHORT).show()
          }
@@ -175,5 +171,23 @@ import kotlin.coroutines.CoroutineContext
              //WITH setImageURI
              //profilePicture.setImageURI(urifile)
          }
+     }
+
+     private fun addProfilePictureInCloud(ref: StorageReference){
+         val user = mAuth!!.currentUser
+         val refDocument = hashMapOf(
+             "ProfilePicture" to ref
+         )
+         val id= getUserID(user?.displayName!!)
+         cloudFirestore.collection("accounts/ProfilePicture"+ id).add(refDocument)
+             .addOnSuccessListener {
+                 Toast.makeText(this@LoggedIn, "Succesfully updated", Toast.LENGTH_SHORT).show()
+             }.addOnFailureListener{
+                 Toast.makeText(this@LoggedIn, "Something went wrong! Try again", Toast.LENGTH_SHORT).show()
+             }
+     }
+
+     private fun getUserID(usernameToSearch: String){
+         //QUERY RICERCA PER USERNAME TRA TUTTI GLI ACCOUNTS
      }
 }

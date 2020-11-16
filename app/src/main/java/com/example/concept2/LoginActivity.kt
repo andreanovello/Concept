@@ -9,7 +9,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
-
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 class LoginActivity : AppCompatActivity() {
@@ -22,6 +23,7 @@ class LoginActivity : AppCompatActivity() {
     lateinit var password: String
 
     private var mAuth: FirebaseAuth? = null
+    private var cloudFirestore = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +42,6 @@ class LoginActivity : AppCompatActivity() {
             username = usernameBox.text.toString()
             password = passwordBox.text.toString()
 
-
             if (username.isNotEmpty() && password.isNotEmpty()){
                 loginUser()
             }else {
@@ -53,32 +54,7 @@ class LoginActivity : AppCompatActivity() {
             username = usernameBox.text.toString()
             password = passwordBox.text.toString()
 
-            if ( username.isNotEmpty() && password.isNotEmpty() ){
-
-                val addOnCompleteListener =
-                    mAuth!!.createUserWithEmailAndPassword(username + "@gmail.com", password)
-                        .addOnCompleteListener(this) { task ->
-                            if (task.isSuccessful) {
-                                Toast.makeText(
-                                    this,
-                                    "You are now registered! Log in and start to play Concept",
-                                    Toast.LENGTH_LONG
-                                ).show()
-                                val profileUpdates = UserProfileChangeRequest.Builder()
-                                    .setDisplayName(username).build()
-                                mAuth!!.currentUser?.updateProfile(profileUpdates)
-                            } else {
-                                Toast.makeText(
-                                    this,
-                                    "An error occurred during the registration",
-                                    Toast.LENGTH_LONG
-                                ).show()
-                            }
-                        }
-
-            } else {
-                Toast.makeText(this, "Invalid username or password", Toast.LENGTH_LONG).show()
-            }
+            createNewAccount(username,password)
         }
 
     }
@@ -101,4 +77,40 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
+    private fun createNewAccount(username: String, password: String) {
+        //val friendsArray=
+        val user = hashMapOf(
+            "Username" to username,
+            //"Friends" to friendsArray,
+            "ProfilePicture" to "",
+            "Online" to false
+        )
+
+        if ( username.isNotEmpty() && password.isNotEmpty() ) {
+            mAuth!!.createUserWithEmailAndPassword(username + "@gmail.com", password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        val profileUpdates = UserProfileChangeRequest.Builder()
+                            .setDisplayName(username).build()
+                        mAuth!!.currentUser?.updateProfile(profileUpdates)
+                        //CREATING DATAS IN CLOUD STORAGE
+                        cloudFirestore.collection("accounts").add(user)
+                            .addOnSuccessListener {
+                                Toast.makeText(this, "You are now registered! Log in and start to play Concept", Toast.LENGTH_LONG).show()
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(
+                                    this,
+                                    "Something went wrong during the registration. Try again",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                    } else {
+                        Toast.makeText(this, "An error occurred during the authentication", Toast.LENGTH_LONG).show()
+                    }
+                }
+        } else {
+            Toast.makeText(this, "Invalid username or password", Toast.LENGTH_LONG).show()
+        }
+    }
 }

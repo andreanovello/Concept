@@ -1,6 +1,7 @@
 package com.example.concept2
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -9,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -82,7 +84,6 @@ class LoginActivity : AppCompatActivity() {
         val user = hashMapOf(
             "Username" to username,
             //"Friends" to friendsArray,
-            "ProfilePicture" to "",
             "Online" to false
         )
 
@@ -91,10 +92,12 @@ class LoginActivity : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         val profileUpdates = UserProfileChangeRequest.Builder()
-                            .setDisplayName(username).build()
+                            .setDisplayName(username)
+                            .setPhotoUri(Uri.parse("android.resource://$packageName/${R.drawable.user_green}"))
+                            .build()
                         mAuth!!.currentUser?.updateProfile(profileUpdates)
                         //CREATING DATAS IN CLOUD STORAGE
-                        cloudFirestore.collection("accounts").add(user)
+                        cloudFirestore.collection("accounts").document(username).set(user)
                             .addOnSuccessListener {
                                 Toast.makeText(this, "You are now registered! Log in and start to play Concept", Toast.LENGTH_LONG).show()
                             }

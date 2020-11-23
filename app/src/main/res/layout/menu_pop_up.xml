@@ -42,7 +42,7 @@
         app:layout_constraintTop_toBottomOf="@+id/close_menu_button">
 
         <ImageView
-            android:id="@+id/temp"
+            android:id="@+id/profile_picture"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginEnd="10dp"
@@ -64,9 +64,9 @@
             android:text="@string/username_label"
             android:textSize="25sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/temp"
-            app:layout_constraintStart_toStartOf="@+id/temp"
-            app:layout_constraintTop_toBottomOf="@+id/temp" />
+            app:layout_constraintEnd_toEndOf="@+id/profile_picture"
+            app:layout_constraintStart_toStartOf="@+id/profile_picture"
+            app:layout_constraintTop_toBottomOf="@+id/profile_picture" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
